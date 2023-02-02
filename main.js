@@ -2,6 +2,23 @@ let playerScore = 0;
 let comScore = 0;
 let winner;
 
+
+const results = document.querySelector(".results");
+const declaration = document.querySelector(".declaration");
+
+//UI
+const buttons = document.querySelectorAll("button");
+buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+        if (playerScore < 5 && comScore < 5) {
+            computerSelection = getComputerChoice();
+            declaration.textContent = (playRound(button.className, computerSelection));
+            results.textContent = ("You = " + playerScore + " / Com = " + comScore);
+            console.log(comScore, playerScore);
+        };
+    });
+});
+
 //Returns computer's decision
 function getComputerChoice() {
     switch (Math.floor(Math.random() * 3)) {
@@ -20,9 +37,9 @@ function playRound(playerSelection, computerSelection) {
     if (playerSelection === computerSelection) {
         winner = "no";
         return "It's a Draw";
-    } else if ((playerSelection === 'rock' && computerSelection === 'scissors') ||
-               (playerSelection === 'paper' && computerSelection === 'rock') ||
-               (playerSelection === 'scissors' && computerSelection === 'paper')) {
+    } else if ((playerSelection === "rock" && computerSelection === "scissors") ||
+               (playerSelection === "paper" && computerSelection === "rock") ||
+               (playerSelection === "scissors" && computerSelection === "paper")) {
         winner = "player";
         playerScore = ++playerScore;
         return "You Win!";
@@ -32,18 +49,3 @@ function playRound(playerSelection, computerSelection) {
         return "You Lose!";
     }
 };
-
-function game(){
-    for (let i = 0; i < 5; i++) {
-        playerSelection = prompt("Choose your Weapon!");
-        computerSelection = getComputerChoice();
-        console.clear();
-        console.log(playRound(playerSelection, computerSelection));
-        console.log("Your Points:" + playerScore);
-        console.log("Their Points:" + comScore);
-        console.log("You Chose: " + playerSelection);
-        console.log("They Chose: " + computerSelection);
-    }
-}
-
-game();
